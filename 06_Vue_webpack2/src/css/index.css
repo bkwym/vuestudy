@@ -1,0 +1,21 @@
+html,body{
+    background-color: cadetblue;
+    padding: 5px;
+    margin: 5px;
+    height: 500px;
+}
+
+.div1{
+    background-image: url("../images/timg.jpg");
+    height: 250px;
+    width: 180px;
+    background-size: cover;
+    
+}
+
+.div2{
+    background-image: url("../images/hp-003.jpg");
+    height: 250px;
+    width: 180px;
+    background-size: cover;
+}

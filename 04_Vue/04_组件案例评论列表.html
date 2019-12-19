@@ -1,0 +1,91 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../02_Vue/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="../js/vue.min.js" ></script>
+
+</head>
+<body style="margin: 10px;">
+    <div id="app">  
+
+        <combox @func="loadcomments"></combox>
+
+       <ul class="list-group">
+           <li class="list-group-item" v-for="item in list" :key="item.id">
+                <span class="badge">评论人：{{item.name}}</span>
+                {{item.content}}
+           </li>
+       </ul>
+
+    </div>
+
+    <template id="tmpl">
+            <div class="form-group ">
+                    <label>评论人：</label>
+                    <input type="text" class="form-control" v-model="name">
+
+                    <label>内容： </label>
+                    <textarea class="form-control" v-model="content"></textarea>
+
+                    <input type="button" value="发表评论" class="btn btn-primary" @click="subComments"  style="margin-top: 10px;"/>
+             </div>
+    </template>
+
+</body>
+
+<script>
+    var componentbox={
+        template:"#tmpl",
+        data(){//子组件中的data必须是一个方法,且返回一个对象,但是使用的方式和Vue实例  完全一样
+            return{
+                name:"",//子组件中使用  对象就定义在子组件上
+                content:""
+            }
+        },
+        methods:{
+            subComments(){//子组件方法定义在子组件中
+                //新的数组
+                var  comment={id:Date.now(),name:this.name,content:this.content};
+                //如果本地数据没有值的情况下就 默认返回一个空数组
+                var  list=JSON.parse(localStorage.getItem('ctms')||'[]');
+                //  向数组尾部添加数据  使用push ,向头部添加 使用 unshift
+                list.unshift(comment)
+                //将新的数组保存到localStorage
+                localStorage.setItem('ctms',JSON.stringify(list));
+
+                this.name=this.content="";
+                //  调用父组件的方法   
+                //  将父组件的方法 如：loadcomments()   通过事件绑定的方式 @func="loadcomments" 传递到子组件上，
+                //  然后在子组件内通过 this.$emit('func')的形式调用父组件 函数
+                this.$emit('func')
+            }
+        }
+    }
+    var  vm =new  Vue({
+        el:"#app",
+        data:{
+            list:[
+                {id:Date.now(),name:'李白',content:'将进酒,杯莫停'},
+                {id:Date.now(),name:'杜甫',content:'一行白鹭上青天'},
+                {id:Date.now(),name:'白居易',content:'江南好,风景旧曾谙'}
+            ]
+        },
+        created(){
+            this.loadcomments()
+        },
+        methods:{ 
+            loadcomments(){
+                var  list=JSON.parse(localStorage.getItem('ctms')||'[]');
+                this.list=list;
+            }
+        } ,
+        components:{
+            "combox":componentbox
+        }
+    })
+</script>
+</html>

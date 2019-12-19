@@ -1,0 +1,41 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/vue.min.js" ></script>
+    <link href="../css/animate.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- <login></login> -->
+    </div>
+</body>
+
+
+<script>
+
+    var login={
+        template:"<h3>登陆组件</h3>"
+    }
+
+    var  vm=new Vue({
+        el:"#app",
+        data:{},
+        methods:{},
+        // components:{
+        //     login
+        // }
+
+        render:function(createElements){
+            return createElements(login)
+            //这里return的结果  会替换掉页面中的那个  el  容器
+            //使用render和原始的渲染组件方式的却别是   render会覆盖掉原来的页面元素和值
+        }
+    })
+
+</script>
+
+</html>

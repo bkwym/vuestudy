@@ -1,0 +1,212 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>品牌列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../02_Vue/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="../js/vue.min.js" ></script>
+
+</head>
+<body>
+    <div id="app">
+
+        <div class="panel panel-primary" style="padding: 8px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">秦王列表</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>
+                    Id:<input type="text" class="form-control" v-model="id"> 
+                </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    Name:<input type="text" class="form-control" v-model="name" @keyup.f2="add"> 
+                </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" class="btn btn-primary" value="Add"  @click="add"/> 
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                        Search:<input type="text" class="form-control" v-model="keywords" v-focus v-color="'blue'"> 
+                    </label>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in search(keywords)" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td v-text="item.name"></td>
+                    <td>{{item.ctime | dateFormat }}</td>
+                    <td><a  href="" @click.prevent="del(item.id)">删除</a> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<div id="app1">
+ <p v-fontweight="700" v-color="'yellow'"> {{dt | dateFormat}}</p>  
+</div>
+
+</body>
+
+
+<script>
+
+    //定义一个全局的过滤器  
+    Vue.filter('dateFormat',function(dateStr,pattern=""){
+        var  dt =new  Date(dateStr);
+        var y=dt.getFullYear();
+        var m=dt.getMonth()+1;
+        var d=dt.getDate()
+
+        if(pattern.toLowerCase()==='yyyy-mm-dd'){
+            return  `${y}-${m}-${d}`
+        }else{
+            var hh=dt.getHours();
+            var mm=dt.getMinutes();
+            var ss=dt.getSeconds();
+
+            return   `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+        }
+
+    })
+
+    //定义全局的键盘按键事件
+    //键盘的所有值的对应码都可以定义
+    Vue.config.keyCodes.f2=113
+    //使用 Vue-directive()  定义全局的指令
+    //参数一 指令的名称(定义指令的时候不需要再指令前加  v- ,但是在调用的时候需要添加 比如：v-focus  )
+    //参数二 是一个对象，在这个对象身上，有一些指令相关的函数，可以在特定的阶段（Vue的生命周期）执行相关的操作
+
+    Vue.directive('focus',{
+        bind:function(el){//当指令绑定到元素上的时候,会立即执行这个bind 函数，只执行一次 
+            //el.focus();//在每一个函数中,第一个参数永远是 el,表示被绑定指令的那个元素,且这个el一定是原生的js对象
+        },
+        inserted:function(el){//表示元素插入到DOM中的时候  会执行inserted 函数  且执行一次
+        //和行为相关的都放在inserted中去执行
+            el.focus();//
+        },
+        updated:function(){
+
+        }
+    })
+
+    Vue.directive('color',{
+        //Vue中和样式相关的操作都放在bind中
+        bind:function(el,params){
+            //el.style.color='red'
+            el.style.color=params.value
+        }
+    })
+
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            id:"",
+            name:"",
+            keywords:'',
+            list:[
+                {id:1,name:'秦献公',ctime:new Date()},
+                {id:2,name:'秦孝公',ctime:new Date()},
+                {id:3,name:'秦惠文王',ctime:new Date()}
+            ]
+        },
+        methods:{
+            add(){
+                var item={id:this.id,name:this.name,ctime:new Date()};
+                this.list.push(item);
+                this.id=this.name='';
+            },
+            del(id){
+                // this.list.some((item,i)=>{
+                //     if(item.id==id){
+                //         this.list.splice(i,1);//删除
+                //         //在数组的some方法中，如果返回为true，就会立即终止这个数组的后续循环
+                //         return true;
+                //     }                
+                // })
+              //
+              var index= this.list.findIndex(item=>{
+                    if(item.id==id){
+                        return true;
+                    }
+                })
+                this.list.splice(index,1);
+            },
+            search(keywords){
+
+                // findIndex  forEach some  filter 都属于数组的新方法 
+                //都会都数组的每一项进行遍历，执行相关的操作  
+
+
+                // var newlist=[];
+                // this.list.forEach(item => {
+                //     if(item.name.indexOf(keywords)!=-1)
+                //     {
+                //         newlist.push(item);
+                //     }
+                // });
+                // return newlist;
+
+
+                //在ES6中，为数组提供了一个新方法   String.prototype.includes('要包含的字符串') 
+                //如果包含 返回true   否则返回false
+                return this.list.filter(item=>{
+                    if(item.name.includes(keywords)){
+                        return item;
+                    }
+                });
+
+            }
+        }
+    });
+
+    //定义一个私有过滤器 
+    var  vm1=new Vue({
+        el:"#app1",
+        data:{
+            dt:new Date()
+        },
+        methods:{},
+        filters:{
+            //定义私有过滤器,过滤器有2个条件,【过滤器名称和处理函数】
+            //过滤器调用时,采用的是就近原则  如果私有过滤器和全局过滤器名称一致，优先调用私有过滤器
+            dateFormat:function(dateStr,pattern=''){
+                var  dt =new  Date(dateStr);
+                var y=dt.getFullYear();
+                var m=dt.getMonth()+1;
+                var d=dt.getDate()
+                if(pattern.toLowerCase()==='yyyy-mm-dd'){
+                    return  `${y}-${m}-${d}`
+                }else{
+                    //padStart  自动填充字符   第一个参数 填充后的长度，第二个参数用什么填充
+                    var hh=(dt.getHours()).toString().padStart(2,0);
+                    var mm=(dt.getMinutes()).toString().padStart(2,0);
+                    var ss=(dt.getSeconds()).toString().padStart(2,0);
+                    return   `${y}-${m}-${d} ${hh}:${mm}:${ss}    就近原则调用私有过滤器~~~~`
+                } 
+            }
+        },
+        directives:{//自定义私有指令
+            'fontweight':{
+                bind:function(el,binding){
+                    el.style.fontWeight=binding.value
+                         }
+                     },
+             'color':function(el,binding){//简写 直接将指令 ‘color’  同时写到update和bind中  
+                    el.style.color=binding.value
+             }
+         }
+    });
+    
+</script>
+</html>

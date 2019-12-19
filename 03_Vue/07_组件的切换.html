@@ -1,0 +1,65 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/vue.min.js" ></script>
+</head>
+<body>
+
+
+
+    <div id="app">
+        <!-- 1 -->
+        <!-- <a  href="" @click.prevent="flag=true">login</a>
+        <a href="" @click.prevent="flag=false">register</a>
+
+        <login v-if="flag"></login>
+        <register v-else="flag"></register> -->
+
+
+                 <a  href="" @click.prevent="comName='login'">login</a>
+                 <a href="" @click.prevent="comName='register'">register</a>
+
+            <component :is="comName"></component>
+
+
+
+
+            <!--VUE提供的四个标签 template   component   transition   transitionGroup -->
+
+    </div>
+
+        <template id="login">
+            <h1>用户登陆</h1>
+        </template>
+
+        <template id="register">
+                <h1>用户注册</h1>
+        </template>
+
+</body>
+
+<script>
+    // 1
+    Vue.component("login",{
+        template:"#login"
+    })
+
+    Vue.component("register",{
+        template:"#register"
+    })
+
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            comName:'login'
+            //flag:true
+        },
+        methods:{
+        }
+    })
+</script>
+</html>

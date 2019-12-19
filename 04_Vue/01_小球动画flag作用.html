@@ -1,0 +1,63 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../02_Vue/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="../js/vue.min.js" ></script>
+    <link href="../css/animate.min.css" rel="stylesheet">
+    <style>
+    .ball{
+        height: 25px;
+        width: 25px;
+        margin-top: 15px;
+        border-radius: 50%;
+        background-color:yellowgreen;
+    }
+    </style>
+</head>
+<body style="margin: 10px;">
+    <div id="app">
+        <input type="button" value="roll ball" @click="flag=!flag" >
+        <br>
+
+        <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <div class="ball" v-show="flag"></div>
+        </transition>
+
+
+    </div>
+</body>
+
+<script>
+    var  vm =new  Vue({
+        el:"#app",
+        data:{
+            flag:false
+        },
+        methods:{
+            beforeEnter(el){
+                el.style.transform="translate(0,0)"
+            },
+            enter(el,done){
+                el.offsetWidth;
+                el.style.transform="translate(150px,250px)";
+                el.style.transition="all 1s ease";
+                //此时  这里的done() 就是下面的钩子函数   afterEnter ，也就是相当于   done是afterEnter的引用
+                done();
+
+            },
+            afterEnter(el){
+                //动画完成之后  调用该函数 
+                //控制小球的显示与隐藏
+                //直接跳过后半场动画,让flag标识符z直接变化false 
+                //当下一次点击的时候  flag由   false--》true
+                this.flag=!this.flag;
+            }
+
+        }
+    })
+</script>
+</html>

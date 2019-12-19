@@ -1,0 +1,88 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../02_Vue/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="../js/vue.min.js" ></script>
+    <!-- 1.引用路由 js -->
+    <script src="../js/vue-router.min.js"></script>
+
+    <style>
+        .router-link-active{
+            background-color: greenyellow;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+               .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform:translateY(150px) 
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.4s ease
+        }
+    </style>
+</head>
+<body style="margin: 10px;">
+    <div id="app">  
+        <router-link to="/account">account</router-link>
+
+          <router-view></router-view>
+   
+        <hr>
+    </div>
+
+<template id="temp">
+    <div>
+        <h1>account 组件 </h1>
+        <router-link to="/account/login" tag="button">登陆</router-link>
+        <router-link to="/register" tag="button">注册</router-link>
+
+        <transition mode="out-in">
+                <router-view></router-view>
+        </transition>
+    </div>
+            
+</template>
+
+</body>
+
+<script>
+
+    var  account={
+        template:"#temp"
+    }
+
+    var  login={
+        template:"<h3>登陆模块 --- </h3>" 
+    }
+     
+    var  register={
+        template:"<h3>注册模块--</h3>"
+    }
+    //  2 创建一个路由对象，当导入Vue-router包后,就有了一个全局的VueRouter
+    //在实例化一个路由对象的时候，可以为构造函数  传递一个 配置对象
+    var objrouter=new  VueRouter({
+            routes:[
+            {path:"/account",component:account,
+                children:[
+                    {path:"login",component:login},
+                    {path:"/register",component:register},
+                ]
+             }
+        ]
+    })
+
+    var  vm =new  Vue({
+        el:"#app",
+        data:{},
+        methods:{   } ,
+        router:objrouter
+    })
+</script>
+</html>

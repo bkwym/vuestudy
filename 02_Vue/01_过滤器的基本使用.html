@@ -1,0 +1,35 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/vue.min.js" ></script>
+</head>
+<body>
+    <div id="app">
+        <P>{{msg | msgformat('take a look') | twice}}</P>
+    </div>
+</body>
+
+
+<script>
+    //定义全局的过滤器 msgformat  
+    //function中第一个参数为默认的参数msg，还可以传参数进来 arg='take a look'
+    Vue.filter('msgformat',function(msg,arg){
+        return msg.replace(/看/g,arg)
+    })
+    //过滤器可以多次的调用  直接在管道符后面调用  msg | 过滤器一 |过滤器二 | 。。。
+    Vue.filter('twice',function(msg){
+        return  msg+"~~~~~~~~~~";
+    })
+    var  vm=new  Vue({
+        el:"#app",
+        data:{
+            msg:"曾梦想仗剑走天涯,看一看世界的繁华,没有什么能够阻挡"
+        }
+    })
+</script>
+
+</html>

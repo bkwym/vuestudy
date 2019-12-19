@@ -1,0 +1,48 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../02_Vue/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="../js/vue.min.js" ></script>
+
+</head>
+<body style="margin: 10px;">
+    <div id="app">
+        <!-- 将父组件中的数据绑定到子组件上,然后在子组件中 通过属性 props 定义一下，可在子组件上用 -->
+        <!-- props:["parentmsg"] -->
+       <com1 :parentmsg="msg"></com1>
+    </div>
+</body>
+
+<script>
+    var  vm =new  Vue({
+        el:"#app",
+        data:{
+           msg:'干就完了，奥力给(父组件)'
+        },
+        methods:{
+        },
+        components:{
+            //子组件中无法访问到 父组件上的  data和methods
+            com1:{
+                data(){//子组件的data  是子组件自身私有的,并且data上的数据都是可读可写的 
+                    return {
+                        title:"子data",
+                        content:"子组件内容"
+                    }
+                },
+                template:'<h3 @click="change">子组件---遇到困难时不要害怕~~~~{{parentmsg}}</h3>',
+                props:["parentmsg"],//而 props 只是可读的
+                methods:{
+                    change(){
+                        this.parentmsg='内容被修改了'
+                    }
+                }
+            }
+        }
+    })
+</script>
+</html>

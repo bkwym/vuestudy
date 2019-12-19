@@ -1,0 +1,95 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../02_Vue/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="../js/vue.min.js" ></script>
+    <link href="../css/animate.min.css" rel="stylesheet">
+    <style>
+        ul{
+            list-style: none;
+        }
+        li{
+            border:1px dashed black;
+            line-height: 25px;
+            padding-left: 5px;
+            padding: 5px;
+            margin: 5px;
+            width: 100%
+        }
+
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform:translateY(150px) 
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.8s ease
+        }
+        li:hover{
+            background-color: pink;
+            transition: all 0.8s ease;
+        }
+
+        /* 使用v-move 和v-leave-active  能够实现列表的后续元素 往上飘的动画效果*/
+        .v-move{
+            transition: all 0.8s ease;
+        }
+        .v-leave-active{
+            position: absolute;
+        }
+
+
+
+    </style>
+</head>
+<body style="margin: 10px;">
+    <div id="app">
+<div style="padding: 5px;margin-left: 35px;">
+    id:<input type="text" v-model="id" >
+    name:<input type="text" v-model="name" >
+
+    <input type="button"  value="add"   @click="add" />
+</div>
+    <ul >
+        <!-- 给transition-group  添加appear    属性  实现入场时候的动画效果 -->
+         <transition-group appear>
+        
+             <li v-for="(item ,i) in list" :key="item.id" @click="del(i)">{{item.name}}</li>
+              
+         </transition-group>
+    </ul>
+
+    </div>
+</body>
+
+<script>
+    var  vm =new  Vue({
+        el:"#app",
+        data:{
+            id:'',
+            name:'',
+            list:[
+                {id:1,name:"赵高"},
+                {id:2,name:"秦桧"},
+                {id:3,name:"蔡京"},
+                {id:4,name:"严嵩"}
+            ]
+        },
+        methods:{
+            add(){
+                this.list.push({id:this.id,name:this.name})
+                this.id=this.name="";
+            },
+            del(i){
+                this.list.splice(i,1)
+            }
+
+        }
+    })
+</script>
+</html>

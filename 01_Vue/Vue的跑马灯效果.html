@@ -1,0 +1,48 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+            <p v-html='msg'></p>
+            <input type="button" value="running"  @click="running" /> 
+            <input type="button" value="stop" @click="stop"/>
+
+    </div>
+
+</body>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            msg:'Morning hours is the best time of the day to work ',
+            intervalId:null
+        },
+        methods:{
+            running:function(){
+                if(this.intervalId!=null) return;
+                 this.intervalId= setInterval(()=>{
+                    //获取第一个字符
+                    var start=this.msg.substring(0,1);
+                    //获取截取第一个后的所有的字符
+                    var end=this.msg.substring(1);
+                    //拼接成新的字符
+                    this.msg=end+start;
+                },100)
+            },
+            stop:function(){
+                clearInterval(this.intervalId);
+                this.intervalId=null;
+
+            }
+
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,58 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../02_Vue/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="../js/vue.min.js" ></script>
+
+</head>
+<body style="margin: 10px;">
+    <div id="app">  
+
+        <input type="button" value="获取元素" @click="getElement" />
+
+        <h3 id="mh3" ref="mh3">  今天天气不错, </h3>
+
+        <hr>
+
+        <login ref="mylogin"></login>
+    </div>
+
+
+
+</body>
+
+<script>
+
+    var login={
+        template:"<h2>登陆组件</h2>",
+        data(){
+            return{
+                sonmsg:"msg ~"
+            }
+        }
+    }
+
+    var  vm =new  Vue({
+        el:"#app",
+        data:{
+        },
+        methods:{ 
+          getElement(){
+              //console.log(document.getElementById("mh3").innerText);
+              //在元素上添加 属性  ref 如ref="mh3"   可以通过this.$refs.mh3....来获取值
+              //console.log(this.$refs.mh3.innerText);
+
+              //console.log(this.$refs.mylogin.sonmsg)
+              console.log(this.$refs.mylogin.sonmsg)
+          }
+        } ,
+        components:{
+            login
+        }
+    })
+</script>
+</html>

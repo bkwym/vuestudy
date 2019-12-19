@@ -1,0 +1,52 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/vue.min.js" ></script>
+
+</head>
+<body style="margin: 10px;">
+    <div id="app">  
+         <!-- 父组件向子组件 传递方法 使用的是事件绑定机制,v-on（@） -->
+         <coml @func="show"></coml>
+    </div>
+
+    <template id="tmpl">
+        <div>
+            <h1>这是子组件</h1>
+
+            <input type="button" value="子组件btn  点击调用父组件 传递的方法"  @click="sonclick('22222','不要怕')"/>
+        </div>
+    </template>
+</body>
+
+<script>
+
+    var coml={
+        template:"#tmpl",
+        methods:{
+            sonclick(data,data2){
+                //console.log('这是触发了 子组件里的click 奥力给')
+                //调用父组件的 方法 
+                this.$emit('func',data,data2)
+            }
+        }
+    }
+
+    var  vm =new  Vue({
+        el:"#app",
+        data:{},
+        methods:{
+            show(str,str2){
+                console.log('调用了父组件身上的show方法 奥力给----'+str+str2);
+            }
+        },
+        components:{
+           coml
+        }
+    })
+</script>
+</html>

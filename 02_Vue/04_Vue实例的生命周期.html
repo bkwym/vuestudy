@@ -1,0 +1,111 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>品牌列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../02_Vue/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="../js/vue.min.js" ></script>
+
+</head>
+<body>
+     <div id="app">
+
+      <!--  <div class="panel panel-primary" style="padding: 8px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">秦王列表</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>
+                    Id:<input type="text" class="form-control" v-model="id"> 
+                </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    Name:<input type="text" class="form-control" v-model="name"> 
+                </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" class="btn btn-primary" value="Add"  @click="add"/> 
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                        Search:<input type="text" class="form-control" v-model="keywords"> 
+                    </label>
+            </div>
+        </div>
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in search(keywords)" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td v-text="item.name"></td>
+                    <td>{{item.ctime}}</td>
+                    <td><a  href="" @click.prevent="del(item.id)">删除</a> </td>
+                </tr>
+            </tbody>
+        </table> -->
+
+    <h3 id="h1">{{msg}}</h3>
+
+        <input type="button" value="修改msg" @click="msg='no-1'" />
+
+    </div>
+</body>
+
+
+<script>
+
+    var vm=new Vue({
+        el:"#app",
+        data:{
+           msg:'ok+1'
+        },
+        methods:{
+          show:function(){
+              console.log('这里执行了show');
+          }           
+        },
+        beforeCreate:function(){//第一个生命周期函数  beforeCreate
+           // this.show();
+           //在vue的生命周期beforeCreate中  Vue中的data数据和methods中的方法都还没有被实例化，
+        },
+        created(){////第二个生命周期函数  created
+            //此时，在Vue的生命周期函数 created中  data上的数据和methods的方法都已经被初始化了，可以调用了
+            //console.log(this.msg);
+            //this.show()
+        },
+        beforeMount(){//第三个生命周期函数  beforeMount
+            //此时的生命周期函数 模板其实已经在内存中渲染完成了，但是并没有在页面上进行渲染,
+            //console.log(document.getElementById('h1').innerText);//所以此时还无法拿到进行渲染后的msg值  data  
+            //而是页面的{{msg}} .
+        },
+        mounted(){ //这是vue的第四个生命周期函数  
+            //此时 已经将内存中渲染完成的页面显示在浏览器中，用户可以看到渲染好的页面了
+            //console.log(document.getElementById('h1').innerText);//所以此时这里可以正常输出 ‘ok’
+            //mounted是 实例创建期间的最后一个生命周期函数，当执行完mounted的时候,实例已经完全创建好了。
+        },
+        //下面的两个事件是运行中的事件,
+        beforeUpdate(){
+             //console.log('页面上的元素是'+document.getElementById('h1').innerText);
+             //console.log('data中的数据是'+this.msg);
+             //当执行beforeUpdate 的时候  ，页面显示的数据还是旧的,但此时data的数据却已经更新了 ,两边数据尚未同步
+        },
+        updated:function(){
+            //console.log('页面上的元素是'+document.getElementById('h1').innerText);
+            //console.log('data中的数据是'+this.msg);
+            //此时 页面数据和data数据已经保持一致.
+            //生命周期已经开始进入销毁周期 
+            //beforeDestroy 和 destroyed
+        }
+    });
+
+</script>
+</html>

@@ -1,0 +1,65 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/vue.min.js" ></script>
+</head>
+<style>
+    .v-enter,
+    .v-leave-to{
+        opacity: 0;
+        transform:translateY(150px)
+    }
+
+    .v-enter-active,
+    .v-leave-active{
+        transition: all 0.8s ease;
+    }
+</style>
+<body>
+
+
+
+    <div id="app">
+        <a  href="" @click.prevent="compName='login'">login</a>
+        <a  href="" @click.prevent="compName='register'">register</a>
+
+        <transition mode="out-in">
+                <component :is="compName"></component>
+        </transition>
+
+    </div>
+
+
+    <template id="login">
+        <h3>login component</h3>
+    </template>
+
+    <template id="register">
+            <h3>register component</h3>
+    </template>
+
+</body>
+
+<script>
+    Vue.component("login",{
+        template:"#login"
+    })
+    Vue.component("register",{
+        template:"#register"
+    })
+
+
+    var vm=new Vue({
+        el:"#app",
+        data:{
+          compName:'login'
+        },
+        methods:{
+        }
+    })
+</script>
+</html>

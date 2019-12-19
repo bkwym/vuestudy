@@ -1,0 +1,110 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/vue.min.js" ></script>
+</head>
+<body>
+
+    <!-- 1. -->
+    <!-- <div id="app">
+        <mycom1></mycom1>
+    </div> -->
+
+    <!-- 2.
+    <div id="app">
+        <mycom2></mycom2>
+    </div> -->
+
+    <!-- 3 -->
+
+    <div id="app">
+        <mycom3></mycom3>
+
+    </div>
+
+
+    <div id="app2">
+        <mycom3></mycom3>
+        <login></login>
+    </div>
+
+    <template id="temp">
+        <div>
+            <h1>这是通过template 元素,在外部定义的组件结构,</h1>
+            <h3>干就完了，奥力给 </h3>
+            <p>{{msg}} ~~~ 干就完了</p>
+        </div>
+    
+    </template>
+
+
+    <template id="temp2">
+            <h4>这是一个局部的登陆组件,干就完了</h4>
+    </template>
+</body>
+
+<script>
+    //1.1:使用Vue.extend来创建 全局 的Vue组件
+    // var  com1=Vue.extend({
+    //     template:"<h3>使用 Vue.extend 创建的组件   </h3>"
+    // })
+
+    //1.2:使用Vue.component('组件名称',组件对象)
+    // Vue.component("mycom1",Vue.extend({
+    //      template:"<h3>使用 Vue.extend 创建的组件   </h3>"
+    // }))
+
+
+    //2.
+    // Vue.component('mycom2',{
+    //     //不论哪种方式创建出来的组件，组件的template 属性指向的模板内容，必须有且只能有唯一的一个根元素
+    //     template:"<div><h2>这是直接使用Vue.component 创建出来的组件  </h2><div></div></div>"
+    // }) 
+    //
+    Vue.component("mycom3",{
+        template:"#temp",
+        data(){//组件中的data除了是一个方法外，还必须返回一个对象,使用方法则和  Vue实例中的data完全一致
+            return {
+                msg:"组件中的data属性必须是一个方法 "
+            }
+        }
+    })
+
+
+    var vm=new Vue({
+        el:"#app",
+        data:{
+        },
+        methods:{
+        }
+    })
+
+
+    var  vm1=new  Vue({
+        el:"#app2",
+        data:{},
+        methods:{},
+        filters:{},//过滤器
+        directives:{},//指令
+        components:{//定义局部组件
+                login:{
+                    template:"#temp2"
+                }
+        },
+
+        //生命的周期函数 
+        beforeCreate(){},
+        created(){},
+        beforeMount(){},
+        mounted(){},
+        beforeUpdate(){},
+        updated(){},
+        beforeDestroy(){},
+        destroy(){}
+    })
+</script>
+</html>

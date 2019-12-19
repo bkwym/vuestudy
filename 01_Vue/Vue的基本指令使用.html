@@ -1,0 +1,60 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/vue.min.js"></script>
+
+    <style>
+    [v-cloak]{
+        display:none
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 使用指令  v-cloak 可以解决 插值表达式闪烁的问题    -->
+        <p v-cloak>____{{msg}}+++++++</p>
+
+        <!-- 使用v-text 指令会覆盖掉元素里原有的值，而使用插值表达式则不会，
+        但是使用v-text 不会出现 闪烁的问题  -->
+        <h5 v-text='msg'>=========</h5>
+
+        <p v-text="msg1"></p>
+        <!-- 使用v-html则会渲染h1 -->
+        <p v-html='msg1'></p>
+        
+        
+        <!--v-bind是Vue中提供的用于绑定属性的指令 ，v-bind可以简写为：   后面可以接合法的表达式  mytitle+"22222"-->
+        <input type="button" value="btn" :title='mytitle+"2222"'>
+
+        <!-- v-on：是vue中的事件绑定指令 ，可以简写问@ -->
+        <input type="button" value="点击" @click='show' /> 
+
+        
+        
+
+    </div>
+</body>
+
+
+<script>
+    var vm=new  Vue({
+        el:"#app",
+        data:{
+            msg:"奋六世而统一",
+            msg1:"<h1>这个是放在标签h1 里的值，使用v-text会将h1当作内容显示，但是使用v-html则会渲染h1</h1>",
+            mytitle:"自定义title"
+        },
+        methods:{
+            show:function(){
+                alert('click here');
+            }
+        }
+    })
+
+</script>
+
+</html>
