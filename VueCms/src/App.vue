@@ -25,7 +25,7 @@
                 </a>
                 <a class="mui-tab-item" href="#tabbar-with-map">
                     <span class="mui-icon mui-icon-search"></span>
-                    <span class="mui-tab-label">设置</span>
+                    <span class="mui-tab-label">搜索</span>
                 </a>
             </nav>
 
