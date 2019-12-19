@@ -36,7 +36,8 @@ module.exports={
             //使用Babel 来处理 将ES6的高级语法转换为webpack能识别的低级语法
             { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
 
-            { test:/\.vue$/, use:'vue-loader'}
+            { test:/\.vue$/, use:'vue-loader'},
+            {test:/\.scss$/,use:['style-loader','css-loader','sass-loader']}
           ]
     },
     resolve:{
