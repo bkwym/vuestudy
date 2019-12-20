@@ -7,16 +7,19 @@ import MemberContainer from './components/tabbar/MemberContainer.vue'
 import ShopcarContainer from './components/tabbar/ShopcarContainer.vue'
 import SearchContainer from './components/tabbar/SearchContainer.vue'
 
+import newlist from './components/news/newlist.vue'
 
 
 
+//设置路由 组件
 var router=new  VueRouter({
     routes:[
         {path:'/',redirect:"/home"},
         {path:'/home',component:HomeContainer},
         {path:'/member',component:MemberContainer},
         {path:'/shopcar',component:ShopcarContainer},
-        {path:'/search',component:SearchContainer}
+        {path:'/search',component:SearchContainer},
+        {path:'/home/newlist',component:newlist}
     ],
     linkActiveClass:'mui-active'//覆盖默认选中高亮样式
 })

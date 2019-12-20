@@ -26,7 +26,14 @@ module.exports={
     module:{
         rules:[
             {test:/\.css$/,use:['style-loader','css-loader']},// 配置处理 .css文件的第三方loader  规则
-            {test:/\.(jpg|png|bmp|gif|jpeg)$/,use:'url-loader?limit=283&name=[hash:8]-[name].[ext]'},
+            {test:/\.(jpg|png|bmp|gif|jpeg)$/,use:[
+                {
+                    loader:"url-loader?limit=283&name=[hash:8]-[name].[ext]",
+                    options:{
+                        esModule: false//解决  图片src="[object Module]"的异常,启用CommonJS模块语法
+                    }
+                }
+            ]},
             //limit 给定图片大小,如果当前给定的值小于或等于图片大小，则图片不会被转成base64位编码格式,
             //否则图片则会被转成64 编码
             //为了防止重名  可以通过[hash:长度]的方式 来取8位长度的哈希值来区分

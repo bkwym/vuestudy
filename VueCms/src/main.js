@@ -12,6 +12,12 @@ Vue.use(VueRouter)
 import router from './Router.js'
 
 
+//导入vue-resource组件  
+import VueResource from 'vue-resource'
+//注册
+Vue.use(VueResource)
+
+
 import app from './App.vue'
 
 //导入mui样式
