@@ -16,8 +16,11 @@ import router from './Router.js'
 import VueResource from 'vue-resource'
 //注册
 Vue.use(VueResource)
-
+//设置全局的域名
 Vue.http.options.root='http://www.liulongbin.top:3005/';
+
+//  设置全局的post表单提交格式  application/x-www-form-urlencoded
+Vue.http.options.emulateJSON=true;
 
 import app from './App.vue'
 
