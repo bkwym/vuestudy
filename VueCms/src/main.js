@@ -17,6 +17,7 @@ import VueResource from 'vue-resource'
 //注册
 Vue.use(VueResource)
 
+Vue.http.options.root='http://www.liulongbin.top:3005/';
 
 import app from './App.vue'
 
@@ -27,11 +28,21 @@ import './libs/mui/css/icons-extra.css'
 //按需导入mint-ui组件
 //导入mint-ui样式
 import 'mint-ui/lib/style.css'
-import {Header,Swipe, SwipeItem} from 'mint-ui'
+import {Header,Swipe, SwipeItem,Button} from 'mint-ui'
 Vue.component(Header.name,Header)
 
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
+Vue.component(Button.name, Button)
+
+
+//下载并导入时间处理插件  npm i moment -S
+import moment from 'moment'
+//定义全局过滤器(时间格式处理)
+Vue.filter('dateFormat',function(dateStr,pattern='YYYY-MM-DD HH:mm:ss'){
+    return moment(dateStr).format(pattern)
+})
+
 
 
 var vm=new Vue({

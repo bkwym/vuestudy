@@ -8,6 +8,7 @@ import ShopcarContainer from './components/tabbar/ShopcarContainer.vue'
 import SearchContainer from './components/tabbar/SearchContainer.vue'
 
 import newlist from './components/news/newlist.vue'
+import newinfo from './components/news/newinfo.vue'
 
 
 
@@ -19,7 +20,9 @@ var router=new  VueRouter({
         {path:'/member',component:MemberContainer},
         {path:'/shopcar',component:ShopcarContainer},
         {path:'/search',component:SearchContainer},
-        {path:'/home/newlist',component:newlist}
+        {path:'/home/newlist',component:newlist},
+
+        {path:'/home/newinfo/:id',component:newinfo}
     ],
     linkActiveClass:'mui-active'//覆盖默认选中高亮样式
 })

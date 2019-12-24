@@ -50,7 +50,7 @@
     },
     methods:{
       GetLunbo(){
-        this.$http.get("http://www.liulongbin.top:3005/api/getlunbo").then(result=>{
+        this.$http.get("api/getlunbo").then(result=>{
           var body=result.body;
           if(body.status===0){
             this.LunBoList=body.message;
