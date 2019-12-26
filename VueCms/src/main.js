@@ -31,13 +31,17 @@ import './libs/mui/css/icons-extra.css'
 //按需导入mint-ui组件
 //导入mint-ui样式
 import 'mint-ui/lib/style.css'
-import {Header,Swipe, SwipeItem,Button} from 'mint-ui'
-Vue.component(Header.name,Header)
+//import {Header,Swipe, SwipeItem,Button,Lazyload} from 'mint-ui'
+// Vue.component(Header.name,Header)
 
-Vue.component(Swipe.name, Swipe)
-Vue.component(SwipeItem.name, SwipeItem)
-Vue.component(Button.name, Button)
+// Vue.component(Swipe.name, Swipe)
+// Vue.component(SwipeItem.name, SwipeItem)
+// Vue.component(Button.name, Button)
+//Vue.use(Lazyload);
 
+
+import MintUI from 'mint-ui'
+Vue.use(MintUI)
 
 //下载并导入时间处理插件  npm i moment -S
 import moment from 'moment'
