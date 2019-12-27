@@ -8,8 +8,7 @@ import Vue from 'vue'
 import VueRouter from  'vue-router'
 //注册路由
 Vue.use(VueRouter)
-//导入路由组件 
-import router from './Router.js'
+
 
 
 //导入vue-resource组件  
@@ -21,8 +20,6 @@ Vue.http.options.root='http://www.liulongbin.top:3005/';
 
 //  设置全局的post表单提交格式  application/x-www-form-urlencoded
 Vue.http.options.emulateJSON=true;
-
-import app from './App.vue'
 
 //导入mui样式
 import './libs/mui/css/mui.min.css'
@@ -43,6 +40,11 @@ import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
 Vue.use(MintUI)
 
+
+//Vue 图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
+
 //下载并导入时间处理插件  npm i moment -S
 import moment from 'moment'
 //定义全局过滤器(时间格式处理)
@@ -50,7 +52,11 @@ Vue.filter('dateFormat',function(dateStr,pattern='YYYY-MM-DD HH:mm:ss'){
     return moment(dateStr).format(pattern)
 })
 
+//导入路由组件 
+import router from './Router.js'
 
+
+import app from './App.vue'
 
 var vm=new Vue({
     el:"#app",

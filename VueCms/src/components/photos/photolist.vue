@@ -2,7 +2,7 @@
   <div>
     
     <!-- 顶部滑动条区域 -->
-    <div id="slider" class="mui-slider">
+    <div id="slider" class="mui-slider stopTouch">
       <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
         <div class="mui-scroll">
           <a :class="['mui-control-item', item.id == 0 ? 'mui-active' : '']" v-for="item in cateList" :key="item.id" @tap="getImgByCid(item.id)">

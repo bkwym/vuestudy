@@ -47,7 +47,9 @@
     overflow-x: hidden;
 }
 
-
+.mint-header{
+    z-index: 99;
+}
 
 .v-enter{
     opacity: 0;
