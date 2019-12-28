@@ -8,17 +8,18 @@ import Vue from 'vue'
 import VueRouter from  'vue-router'
 //注册路由
 Vue.use(VueRouter)
-//导入路由组件 
-import router from './Router.js'
+
 
 
 //导入vue-resource组件  
 import VueResource from 'vue-resource'
 //注册
 Vue.use(VueResource)
+//设置全局的域名
+Vue.http.options.root='http://www.liulongbin.top:3005/';
 
-
-import app from './App.vue'
+//  设置全局的post表单提交格式  application/x-www-form-urlencoded
+Vue.http.options.emulateJSON=true;
 
 //导入mui样式
 import './libs/mui/css/mui.min.css'
@@ -27,12 +28,35 @@ import './libs/mui/css/icons-extra.css'
 //按需导入mint-ui组件
 //导入mint-ui样式
 import 'mint-ui/lib/style.css'
-import {Header,Swipe, SwipeItem} from 'mint-ui'
-Vue.component(Header.name,Header)
+//import {Header,Swipe, SwipeItem,Button,Lazyload} from 'mint-ui'
+// Vue.component(Header.name,Header)
 
-Vue.component(Swipe.name, Swipe)
-Vue.component(SwipeItem.name, SwipeItem)
+// Vue.component(Swipe.name, Swipe)
+// Vue.component(SwipeItem.name, SwipeItem)
+// Vue.component(Button.name, Button)
+//Vue.use(Lazyload);
 
+
+import MintUI from 'mint-ui'
+Vue.use(MintUI)
+
+
+//Vue 图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
+
+//下载并导入时间处理插件  npm i moment -S
+import moment from 'moment'
+//定义全局过滤器(时间格式处理)
+Vue.filter('dateFormat',function(dateStr,pattern='YYYY-MM-DD HH:mm:ss'){
+    return moment(dateStr).format(pattern)
+})
+
+//导入路由组件 
+import router from './Router.js'
+
+
+import app from './App.vue'
 
 var vm=new Vue({
     el:"#app",

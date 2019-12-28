@@ -11,7 +11,7 @@
         </transition>
 
         <!-- footer部分 -->
-        <nav class="mui-bar mui-bar-tab">
+        <nav class="mui-bar mui-bar-tab slide-stop-touch">
                 <router-link class="mui-tab-item" to="/home">
                     <span class="mui-icon mui-icon-home"></span>
                     <span class="mui-tab-label">首页</span>
@@ -43,10 +43,13 @@
 <style lang="scss" scoped>
 .apptoppadding{
     padding-top: 40px;
+    padding-bottom: 50px;
     overflow-x: hidden;
 }
 
-
+.mint-header{
+    z-index: 99;
+}
 
 .v-enter{
     opacity: 0;
@@ -62,5 +65,10 @@
 .v-enter-active,
 .v-leave-active{
     transition: all 0.5s ease;
+}
+
+
+.slide-stop-touch{
+  touch-action: none;
 }
 </style>

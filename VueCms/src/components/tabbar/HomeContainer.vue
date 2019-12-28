@@ -2,23 +2,19 @@
   <div>
 
     <!-- 轮播图 -->
-  <mt-swipe :auto="4000">
-    <mt-swipe-item v-for="item in LunBoList" :key='item.id'>
-      <img :src="item.img">
-    </mt-swipe-item>
-  </mt-swipe>
+    <swiper :swiperlist="LunBoList" :isfull="true"></swiper>
     <!-- 九宫格 -->
 
-    <ul class="mui-table-view mui-grid-view mui-grid-9">
+    <ul class="mui-table-view mui-grid-view mui-grid-6 slide-stop-touch">
         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/newlist">
                 <img src="../../images/menu1.png" alt="">
                 <div class="mui-media-body">新闻资讯</div></router-link></li>
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/photolist">
                 <img src="../../images/menu2.png" alt="">
-                <div class="mui-media-body">图片分享</div></a></li>
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                <div class="mui-media-body">图片分享</div></router-link></li>
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/goodslist">
                 <img src="../../images/menu3.png" alt="">
-                <div class="mui-media-body">商品购买</div></a></li>
+                <div class="mui-media-body">商品购买</div></router-link></li>
         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
                 <img src="../../images/menu4.png" alt="">
                 <div class="mui-media-body">留言反馈</div></a></li>
@@ -36,8 +32,8 @@
 
 <script>
   //按需加载  mint-ui 的 Toast 模块 
-  import {Toast} from 'mint-ui'
-
+  // import {Toast} from 'mint-ui'
+  import swiper from  '../subcomponents/swiper.vue'
   export default {
     data(){
       return{
@@ -50,7 +46,7 @@
     },
     methods:{
       GetLunbo(){
-        this.$http.get("http://www.liulongbin.top:3005/api/getlunbo").then(result=>{
+        this.$http.get("api/getlunbo").then(result=>{
           var body=result.body;
           if(body.status===0){
             this.LunBoList=body.message;
@@ -60,6 +56,9 @@
           }
         })
       }
+    },
+    components:{
+      swiper
     }
   }
 
@@ -67,30 +66,8 @@
 
 </script>
 
-<style lang="scss"  scoped>
-    .mint-swipe{
-      height: 200px;
-
-
-      .mint-swipe-item{
-        &:nth-child(1){
-          background-color: red;
-         }
-        &:nth-child(2){
-            background-color: orange;
-         }
-        &:nth-child(3){
-            background-color: blue;
-         }
-
-         img{
-           width: 100%;
-           height: 100%;
-         }
-       }
-    }
-
-      .mui-grid-view.mui-grid-9 {
+<style lang="scss" scoped>
+  .mui-grid-view.mui-grid-6 {
         background-color: #fff;
         border: none;
         img {
@@ -103,7 +80,7 @@
         }
     }
 
-    .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+    .mui-grid-view.mui-grid-6 .mui-table-view-cell {
       border: 0;
     }
 </style>
