@@ -143,6 +143,7 @@ export default {
     afterEnter(el) {
       this.ballFlag = !this.ballFlag;
     },
+
     getSelectedCount(count) {
       // 当子组件把 选中的数量传递给父组件的时候，把选中的值保存到 data 上
       this.selectedCount = count;
