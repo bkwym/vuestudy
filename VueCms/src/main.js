@@ -9,12 +9,107 @@ import VueRouter from  'vue-router'
 //注册路由
 Vue.use(VueRouter)
 
+//导入vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
+var car =JSON.parse(localStorage.getItem('car')||'[]');
+const store = new Vuex.Store({
+    state:{//this.$store.state.***
+        car:car//将购物车中的商品用一个数组存储起来 
+    },
+    mutations:{//this.$store.commit('方法名','按需传递的唯一参数')
+        addToCar(state,goodsinfo){
+            var flag=false;//默认为在购物车中没有找到同样的商品 
+            state.car.some(item=>{
+                if(item.id===goodsinfo.id)//如果有相同  就数量累加 
+                {
+                    item.count+=parseInt(goodsinfo.count);
+                    flag=true;
+                    return true;
+                }
+            })
+            if(!flag){//如果没有  这把商品添加到购物车中 
+                state.car.push(goodsinfo);
+            }
 
+            localStorage.setItem("car",JSON.stringify(state.car))//将数据保存到本地存储
+        },
+        updateGoodsInfo(state,goodsinfo){
+            state.car.some(item=>{
+                if(item.id==goodsinfo.id)
+                {
+                    item.count=parseInt(goodsinfo.count);
+                    return true;
+                }
+            })
+            localStorage.setItem('car',JSON.stringify(state.car));
+        },
+        removeFromCar(state,id){
+            state.car.some((item,i)=>{
+                if(item.id==id){
+                    state.car.splice(i,1);
+                    return true;
+                }
+            })
+            localStorage.setItem("car",JSON.stringify(state.car))
+        },
+        updateGoodsSelected(state,info){
+            state.car.some(item=>{
+                if(item.id==info.id)
+                {
+                    item.selected=info.selected;//也可以取反
+                }
+            })
+            localStorage.setItem('car',JSON.stringify(state.car));
+        }
+    },
+    getters:{//this.$store.getters.*****
+        getAllCount(state){
+            var  c=0;
+            state.car.forEach(item => {
+                c+=item.count
+            });
+            return c;
+        },
+        getGoodsCount(state){
+            var co={};
+            //循环本地保存的购物车商品数据,获取对应的商品数量
+            state.car.forEach(item=>{
+                co[item.id]=item.count
+            })
+            return co;
+        },
+        getGoodsSelected(state){
+            var o={};
+            state.car.forEach(item=>{
+                o[item.id]=item.selected
+            })
+            return o;
+        },
+        getGoodsCountAndAmount(state){
+            var o={
+                count:0,
+                amount:0
+            }
+            state.car.forEach(item=>{
+                if(item.selected){
+                    o.count+=item.count;
+                    o.amount+=item.price*item.count
+                }
+            })
+            return o;
+        }
+    }
+})
 
 //导入vue-resource组件  
 import VueResource from 'vue-resource'
 //注册
 Vue.use(VueResource)
+
+
+
+
 //设置全局的域名
 Vue.http.options.root='http://www.liulongbin.top:3005/';
 
@@ -57,11 +152,13 @@ import router from './Router.js'
 
 
 import app from './App.vue'
+// import { stat } from 'fs';
 
 var vm=new Vue({
     el:"#app",
     data:{},
     render:c=>c(app),
-    router//挂载路由
+    router,//挂载路由
+    store//挂在Vuex
 })
 
